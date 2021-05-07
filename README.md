@@ -48,7 +48,6 @@ Construisez une API sécurisée pour une application d'avis gastronomiques.
 | PUT | /api/sauces/:id | SOIT Sauce comme JSON OU { sauce : Chaîne, image : Fichier } | { message: Chaîne } | Met à jour la sauce avec l'identifiant fourni. Si une image est téléchargée, capturez-la et mettez à jour l'image URL des sauces. Si aucun fichier n'est fourni, les détails de la sauce figurent directement dans le corps de la demande (req.body.name, req.body.heat etc). Si un fichier est fourni, la sauce avec chaîne est en req.body.sauce. |
 | DELETE | /api/sauces/:id | Non demandé | { message: Chaîne } | Supprime la sauce avec l'ID fourni. |
 | POST | /api/sauces/:id/like | { userId: Chaîne, j'aime : Nombre } | { message: Chaîne } | Définit le statut "j'aime" pour userID fourni. Si j'aime = 1, l'utilisateur aime la sauce. Si j'aime = 0, l'utilisateur annule ce qu'il aime ou ce qu'il n'aime pas. Si j'aime = -1, l'utilisateur n'aime pas la sauce. L'identifiant de l'utilisateur doit être ajouté ou supprimé du tableau approprié, en gardant une trace de ses préférences et en l'empêchant d'aimer ou de ne pas aimer la même sauce plusieurs fois. Nombre total de "j'aime" et de "je n'aime pas" à mettre à jour avec chaque "j'aime". |
-|
 ### Contraintes techniques
 * Utilisation d'un serveur NodeJS, du framework Express, d'une DB MongoDB et du plug-in Mongoose;
 * Toute erreur doit être renvoyée telle quelle, sans aucune modification ni ajout;
@@ -58,8 +57,9 @@ Construisez une API sécurisée pour une application d'avis gastronomiques.
 ## Comment utiliser ce dépôt
 ### Partie Frontend
 * URL du repository GitHub contenant le frontend : https://github.com/OpenClassrooms-Student-Center/dwj-projet6
-* Nécessite Angular CLI V.7.0.2;
+* Pré-requis :
+    * Angular CLI : https://github.com/angular/angular-cli (l'application a été créée avec la version 7.0.2),
+    * Installer node-sass à part;
 * Exécuter 'npm install';
-* Installer node-sass à part;
 * Exécuter 'ng serve' et aller sur 'http://localhost:4200/'.
 ### Partie Backend
