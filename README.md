@@ -55,11 +55,13 @@ Construisez une API sécurisée pour une application d'avis gastronomiques.
 ## Livrables
 * Le lien vers un dépôt Git public contenant le code de l'API.
 ## Comment utiliser ce dépôt
+* S'assurer au préalable de disposer de node.js sur le poste, sinon le télécharger (https://nodejs.org/) puis l'installer;
 ### Partie Frontend
-* URL du repository GitHub contenant le frontend : https://github.com/OpenClassrooms-Student-Center/dwj-projet6
-* Pré-requis :
-    * Angular CLI : https://github.com/angular/angular-cli (l'application a été créée avec la version 7.0.2),
-    * Installer node-sass à part;
-* Exécuter 'npm install';
-* Exécuter 'ng serve' et aller sur 'http://localhost:4200/'.
+* Ouvrir le dossier 'Frontend' dans son IDE;
+* Ouvrir un terminal et suivre les étapes d'installation suivantes dans l'ordre :
+    * npm install -g @angular/cli (installe le client angular permettant d'utiliser 'ng'),
+    * npm install sass (qui va installer entre autres node-sass),
+    * npm install (qui installe les dépendances du projet),
+* Exécuter 'ng serve' (ou 'npm start');
+* Une fois la compilation effectuée, ouvrir un navigateur et aller sur 'http://localhost:4200/'.
 ### Partie Backend
