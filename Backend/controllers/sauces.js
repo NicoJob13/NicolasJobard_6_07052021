@@ -1,4 +1,5 @@
-const Sauce = require('../models/Sauce');
+const Sauce = require('../models/sauce');
+const fs = require('fs');
 
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
@@ -14,30 +15,51 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.createSauce = (req, res, next) => {
-    delete req.body._id;
+    const sauceObject = JSON.parse(req.body.sauce);
+    delete sauceObject._id;
     const sauce = new Sauce({
-        ...req.body
+        ...sauceObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.save()
-        .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée' }))
+        .then(() => {
+            res.status(201).json({ message: 'Nouvelle sauce enregistrée' });
+            next();
+        })
         .catch(() => res.status(400).json({ error }));
-    next();
 };
 
 exports.modifySauce = (req, res, next) => {
-    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Sauce modifiée' }))
+    const sauceObject = req.file ?
+        {
+            ...JSON.parse(req.body.sauce),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+        .then(() => {
+            res.status(200).json({ message: 'Sauce modifiée' })
+            next();
+        })
         .catch(error => res.status(400).json({ error }));
-    next();
+    
 };
 
 exports.deleteSauce = (req, res, next) => {
-    Sauce.deleteOne({ _id: req.params.id})
-        .then(() => res.status(200).json({ message: 'Sauce supprimée' }))
-        .catch(error => res.status(400).json({ error }));
-    next();
+    Sauce.findOne({ _id: req.params.id})
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images')[1];
+            fs.unlink(`image/${filename}`, () => {
+                Sauce.deleteOne({ _id: req.params.id })
+                    .then(() => {
+                        res.status(200).json({ message: 'Sauce supprimée' });
+                        next();
+                    })
+                    .catch(error => res.status(400).json({ error }));
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
-exports.likeSauce = (req, res, next) => {
+exports.likingSauce = (req, res, next) => {
     next();
 };
