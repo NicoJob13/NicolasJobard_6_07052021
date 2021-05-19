@@ -19,8 +19,8 @@ const sauceSchema = mongoose.Schema({//On spécifie les champs souhaités dans l
     heat: { type: Number, required: true }, //Indicateur de 'force' de la sauce
     likes: { type: Number, default: 0 }, //Nombre de like 
     dislikes: { type: Number, default: 0 }, //Nombre de dislike
-    usersLiked: { type: Array, default: [] }, //Tableau des userId des utilisateurs aimant
-    usersDisliked: { type: Array, default: [] } //Tableau des userId des utilisateurs n'aimant pas
+    usersLiked: { type: [String], default: [] }, //Tableau des userId (Strings) des utilisateurs aimant
+    usersDisliked: { type: [String], default: [] } //Tableau des userId (Strings) des utilisateurs n'aimant pas
 });
 
 /***********************Export du modèle avec un nom, 'User', pour le rendre utilisable dans les autres fichiers***********************/
