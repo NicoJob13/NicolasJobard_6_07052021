@@ -30,12 +30,12 @@ exports.signupUser = (req, res, next) => {
                 });
                 user.save() //Sauvegarde de l'utilisateur dans la base
                     .then(() => {//En cas de réussite
-                        res.status(201).json({ message: 'Nouvel utilisateur enregistré' }); //Message de réussite dans la console
+                        res.status(201).json({ message: 'Nouvel utilisateur enregistré' }); //Statut et message de réussite
                         next();
                     })
-                    .catch(() => res.status(400).json({ error })); //En cas d'erreur on retourne l'erreur
+                    .catch(() => res.status(400).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
             })
-            .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne l'erreur
+            .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
     } else {//Si au moins l'une des expressions régulières n'est pas vérifiée
         throw new Error("L'adresse ou le mot de passe ne correspond pas à un format valide."); //On retourne le message dans la console
     }
@@ -69,7 +69,7 @@ exports.loginUser = (req, res, next) => {
                     });
                     next();
                 })
-                .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne l'erreur
+                .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
         })
-        .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne l'erreur
+        .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
 };

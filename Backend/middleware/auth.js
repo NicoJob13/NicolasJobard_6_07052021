@@ -20,7 +20,8 @@ module.exports = (req, res, next) => {
         } else {//Si correspond le processus peut continuer
             next();
         }
-    } catch (error) {//En cas d'erreur : si on reçoit une erreur on la retourne, sinon on renvoie un message 'standard'
+    } catch (error) {/*En cas d'erreur on retourne un statut d'erreur + si on reçoit une erreur on la retourne, sinon on renvoie un
+    message 'standard'*/
         res.status(401).json({ error: error | 'Requête non authentifiée' });
     }
 };
