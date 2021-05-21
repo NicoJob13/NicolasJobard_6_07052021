@@ -20,7 +20,12 @@ const saucesRoutes = require('./routes/sauces');
 
 /**************Connexion à la base MongoDB avec utilisation de variables d'environnement pour sécuriser l'accès à la base**************/
 
-mongoose.connect('mongodb+srv://OCP6_User:Sushi-2021@ocp6cluster.4xhys.mongodb.net/test?retryWrites=true&w=majority', {
+//Appel du fichier de configuration de dotenv
+require('dotenv').config();
+
+mongoose.connect(
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUST}.4xhys.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, 
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }) //Information sur le statut de la connexion :
