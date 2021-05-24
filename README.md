@@ -56,12 +56,21 @@ Construisez une API sécurisée pour une application d'avis gastronomiques.
 * Le lien vers un dépôt Git public contenant le code de l'API.
 ## Comment utiliser ce dépôt
 * S'assurer au préalable de disposer de node.js sur le poste, sinon le télécharger (https://nodejs.org/) puis l'installer;
+### Partie Backend
+* Sur MongoDB (https://www.mongodb.com/) créer un compte, un cluster, une base de données et un utilisateur ayant des droits de lecture et écriture; 
+* Ouvrir le dossier 'Backend' du projet dans son IDE;
+* Ouvrir un terminal et suivre les étapes d'installation suivantes :
+    * npm install (qui installe les dépendances du projet),
+    * créer un fichier '.env' afin d'y renseigner les variables d'environnement suivantes, correspondant aux informations de la base de données MongoDB :
+        * DB_CLUST=Le nom de votre cluster
+        * DB_NAME=La nom de la base
+        * DB_USER=Le nom d'utilisateur
+        * DB_PASS=Le mot de passe associé à l'utilisateur
+* Exécuter 'nodemon server' : les messages 'Listening on port 3000' et 'Connexion à MongoDB réussie' doivent apparaître;
 ### Partie Frontend
 * Ouvrir le dossier 'Frontend' dans son IDE;
-* Ouvrir un terminal et suivre les étapes d'installation suivantes dans l'ordre :
+* Ouvrir un terminal et suivre les étapes d'installation suivantes :
     * npm install -g @angular/cli (installe le client angular permettant d'utiliser 'ng'),
-    * npm install sass (qui va installer entre autres node-sass),
-    * npm install (qui installe les dépendances du projet),
+    * npm install (qui installe les dépendances du projet);
 * Exécuter 'ng serve' (ou 'npm start');
 * Une fois la compilation effectuée, ouvrir un navigateur et aller sur 'http://localhost:4200/'.
-### Partie Backend
