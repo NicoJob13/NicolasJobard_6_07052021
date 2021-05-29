@@ -5,6 +5,7 @@
 
 const express = require('express'); //Package de création d'API
 const helmet = require('helmet'); //Package de sécurisation des en-têtes
+const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser'); //Package d'analyse du body
 const mongoose = require('mongoose'); //Package facilitant les intéractions avec la base de données
 const path = require('path'); //Package permettant d'accéder au path du serveur
@@ -17,6 +18,17 @@ const app = express();
 
 const authRoutes = require('./routes/auth');
 const saucesRoutes = require('./routes/sauces');
+
+/***************************************Limitation du nombre de requêtes pour une même adresse IP**************************************/
+//Le but est d'empêcher les attaques en force brute
+
+const limiter = rateLimit({//Appel du package
+  windowMS: 5 * 60 * 1000, //Délai de mémorisation des requêtes et de blocage après dépassement du nombre de requêtes (en millisecondes)
+  max: 50, //Nombre maximum de requêtes pour une même adresse IP
+  message: "Trop de requêtes effectuées avec cette adresse IP",
+});
+
+app.use(limiter); //Utilisation de la règle créée
 
 /**************Connexion à la base MongoDB avec utilisation de variables d'environnement pour sécuriser l'accès à la base**************/
 

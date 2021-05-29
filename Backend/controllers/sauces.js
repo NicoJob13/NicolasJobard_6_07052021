@@ -59,13 +59,20 @@ exports.modifySauce = (req, res, next) => {
             lequel on pourra ajouter le fichier image*/
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` //Résolution de l'Url de l'image
         } : { ...req.body }; //Si on ne modifie pas l'image on prend uniquement les information du body
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }) /*Modifie l'objet d'id passée en 1er argument avec
-    les informations de celui passé en 2nd argument en récupérant l'objet qui est dans le corps de la requête avec le spread*/
-        .then(() => {//En cas de réussite
-            res.status(200).json({ message: 'Sauce modifiée' }); //Message de réussite dans la console
-            next();
+    Sauce.findOne({ _id: req.params.id}) //Trouve la sauce
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images')[1]; //Récupère le nom du fichier image à partir de son Url
+            fs.unlink(`images/${filename}`, () => {//Supprime l'image du dossier 'images' du serveur
+                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }) /*Modifie l'objet d'id passée en 1er argument avec
+                les informations de celui passé en 2nd argument en récupérant l'objet qui est dans le corps de la requête avec le spread*/
+                    .then(() => {//En cas de réussite
+                        res.status(200).json({ message: 'Sauce modifiée' }); //Message de réussite dans la console
+                        next();
+                    })
+                    .catch(error => res.status(400).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
+            });
         })
-        .catch(error => res.status(400).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
+        .catch(error => res.status(500).json({ error })); //En cas d'erreur on retourne un statut d'erreur et l'erreur
 };
 
 /***************************************************Controller de suppression de sauce*************************************************/
